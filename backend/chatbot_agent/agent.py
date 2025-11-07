@@ -3,12 +3,19 @@ from google.adk.planners import PlanReActPlanner
 from google.adk.tools import AgentTool
 from .agents.agentprofiles import AgentProfile
 
+from .agents.profiles.query_agent.tools import (
+    execute_query,
+)
+
 query_agent_profile = AgentProfile(agent_name="query_agent")
 query_agent = LlmAgent(
     name=query_agent_profile.name,
     model=query_agent_profile.model_id,
     description=query_agent_profile.description,
     instruction=query_agent_profile.instruction,
+    tools=[
+        execute_query
+    ]
 )
 
 root_agent_profile = AgentProfile(agent_name="root_agent")
@@ -21,4 +28,7 @@ root_agent = Agent(
     tools=[
         AgentTool(agent=query_agent),
     ],
+    # sub_agents=[
+    #     query_agent,
+    # ]
 )

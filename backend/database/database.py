@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).parent
 class InsuranceDatabase:
     def __init__(self, db_path: str = None):
         if db_path is None:
-            db_path = BASE_DIR / "insurance_policies.db"
+            db_path = BASE_DIR / "insurance.db"
 
         self.db_path = db_path
         self._connection = None
