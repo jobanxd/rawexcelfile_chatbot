@@ -1,10 +1,10 @@
-# 🤖 Raw ExcelFile Chatbot
+# Raw ExcelFile Chatbot
 
 A lightweight backend tool for creating and managing SQLite databases directly from raw Excel/CSV files — designed to support chatbot interactions over structured data.
 
 ---
 
-## 🗃️ SQLite Database Tool
+## SQLite Database Tool
 
 A simple Python command-line utility that allows you to:
 
@@ -14,7 +14,7 @@ A simple Python command-line utility that allows you to:
 
 ---
 
-## 🔧 Setup
+## Setup
 
 ```bash
 # Create a virtual environment
@@ -34,7 +34,7 @@ pip install pandas
 
 ---
 
-## 🏗️ Create a Database
+## Create a Database
 
 Create a new SQLite database file.
 
@@ -49,7 +49,7 @@ python db_tool.py create-db insurance.db
 
 ---
 
-## 📥 Add a Table from CSV
+## Add a Table from CSV
 
 Add a CSV file as a table to an existing SQLite database.
 
@@ -68,7 +68,7 @@ python db_tool.py add-table insurance_claims.csv insurance.db --table claims
 
 ---
 
-## 💡 Notes
+## Notes
 
 - The database **must exist** before adding a table.  
 - If a table already exists, it will be **replaced**.  
@@ -76,7 +76,7 @@ python db_tool.py add-table insurance_claims.csv insurance.db --table claims
 
 ---
 
-## 🧪 ADK Web Testing (Backend)
+## ADK Web Testing (Backend)
 
 Run the chatbot web interface from the backend.
 
@@ -91,3 +91,28 @@ Then open your local host in the browser, select **`chatbot_agent`**, and start 
 
 **Note:**  
 This setup and tool are for the **backend (BE)** side only.
+
+--- 
+
+## FastAPI Testing (Backend)
+
+Run the agent endpoints with FastAPI.
+
+```bash
+cd backend
+uvicorn main:app --reload
+```
+
+Then open your local host in the browser, then test `/api/generate` to send request.
+
+Example Payload:
+```
+{
+  "session_id": "string",
+  "user_id": "string",
+  "input_query": "string"
+}
+```
+
+To test history on the same session, use same user_id and session_id. To create new chat, use different session_id. 
+Put your message in "input_query".
