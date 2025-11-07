@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
@@ -29,7 +30,7 @@ app = FastAPI(
     title="Chatbot Agent",
     description="Chatbot Agent for Insurance POC",
     version="0.1.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -42,6 +43,6 @@ app.add_middleware(
 
 app.include_router(chatbot_agent.router, prefix="/api")
 
-@app.get("/")
-def read_root():
-    return {"message": "Unified Agent App is Running."}
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
