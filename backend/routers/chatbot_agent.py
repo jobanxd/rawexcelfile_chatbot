@@ -67,7 +67,6 @@ async def generate_respones(request: ChatbotAgentRequest):
         response_parts=[]
 
         async for event in events:
-            logger.info("Event: %s", event)
             if hasattr(event, 'content') and event.content:
                 if hasattr(event.content, 'parts'):
                     for part in event.content.parts:
@@ -75,8 +74,11 @@ async def generate_respones(request: ChatbotAgentRequest):
                             response_parts.append(part.text)
         
         response_message = "".join(response_parts).strip()
+        logger.info("Response Message: %s", response_message)
         
-        return ChatbotAgentResponse(response=response_message)
+        return ChatbotAgentResponse(
+            response=response_message,
+        )
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
