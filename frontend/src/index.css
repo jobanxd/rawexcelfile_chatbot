@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
 /* Markdown styling for bot messages */
-.bg-white p {
+.backdrop-blur-xl p {
   margin-bottom: 0.5rem;
+  color: #e5e7eb;
 }
 
-.bg-white ul {
+.backdrop-blur-xl ul {
   list-style-type: disc;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.bg-white ol {
+.backdrop-blur-xl ol {
   list-style-type: decimal;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.bg-white strong {
+.backdrop-blur-xl strong {
   font-weight: bold;
+  color: #c084fc;
 }
 
-.bg-white em {
+.backdrop-blur-xl em {
   font-style: italic;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
 }
