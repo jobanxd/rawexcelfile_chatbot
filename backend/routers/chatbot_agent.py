@@ -37,13 +37,18 @@ async def generate_respones(request: ChatbotAgentRequest):
             user_id=request.user_id,
             session_id=request.session_id,
         )
+
+        if session:
+            logger.info("Found existing session. Using session ID: %s", request.session_id)
+
         if not session:
             session = await session_svc.create_session(
                 app_name="Chatbot Agent",
                 user_id=request.user_id,
                 session_id=request.session_id,
+                state={},
             )
-        logger.info("Session: %s", session)
+            logger.info("Created new session. Using session ID: %s", request.session_id)
 
         runner = Runner(
             agent=root_agent,
