@@ -50,6 +50,11 @@ function App() {
     setAnimatingMessage(userMessage);
     setInputMessage('');
     
+    // Immediately focus after clearing input
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+    
     // Wait for animation to complete before adding to messages
     setTimeout(() => {
       setMessages(prev => [...prev, userMessage]);
@@ -74,6 +79,10 @@ function App() {
       setTimeout(() => {
         setMessages(prev => [...prev, botMessage]);
         setIsLoading(false);
+        // Focus input after bot response
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
       }, 500);
     } catch (error) {
       console.error('Error sending message:', error);
@@ -83,6 +92,10 @@ function App() {
       };
       setMessages(prev => [...prev, errorMessage]);
       setIsLoading(false);
+      // Focus input after error
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
     }
   };
 
