@@ -30,12 +30,16 @@ class AgentProfile:
         self.name = agent_profile['agent_name']
         self.model_id = agent_profile['model_id']
 
+        # Load filepath for description and instruction
+        description_filepath = self.BASE_DIR / 'profiles' / agent_profile['description_filepath']
+        instructions_filepath = self.BASE_DIR / 'profiles' / agent_profile['instructions_filepath']
+
         # Load description from file
-        with open(agent_profile['description_filepath'], 'r', encoding='utf-8') as file:
+        with open(description_filepath, 'r', encoding='utf-8') as file:
             self.description = file.read()
 
         # Load instruction from file
-        with open(agent_profile['instructions_filepath'], 'r', encoding='utf-8') as file:
+        with open(instructions_filepath, 'r', encoding='utf-8') as file:
             self.instruction = file.read()
 
 if __name__ == "__main__":

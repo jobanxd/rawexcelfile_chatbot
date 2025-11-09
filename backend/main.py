@@ -1,22 +1,25 @@
+import os
+import logging
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
-import os
-import logging
-from dotenv import load_dotenv
-load_dotenv()
 
+from core.settings import settings
 from routers import chatbot_agent
 
+logging.basicConfig(
+    level=settings.LOG_LEVEL,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator:
     try:
-        os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
-        os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = os.getenv("GOOGLE_GENAI_USE_VERTEXAI")
+        os.environ["GOOGLE_API_KEY"] = settings.GOOGLE_API_KEY
+        os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = str(settings.GOOGLE_GENAI_USE_VERTEXAI)
         logger.info("API startup complete!!!")
         yield
         logger.info("Shutting down Application...")
@@ -24,18 +27,16 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
         logger.error(f"Failed to start application : {e}")
         raise
 
-    
-
 app = FastAPI(
-    title="Chatbot Agent",
-    description="Chatbot Agent for Insurance POC",
-    version="0.1.0",
+    title=settings.APP_NAME,
+    description=settings.DESCRIPTION,
+    version=settings.VERSION,
     lifespan=lifespan,
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
