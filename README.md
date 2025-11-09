@@ -223,6 +223,8 @@ rawexcelfile_chatbot/
 │   ├── chatbot_agent/        # Agent logic and tools
 │   ├── routers/              # API route handlers
 │   ├── models/               # Request/response models
+│   ├── core/                 # App settings, config, utilities
+│   ├── services/             # Business logic/ service classes
 │   ├── main.py               # FastAPI application
 │   ├── db_tool.py            # Database CLI utility
 │   └── requirements.txt      # Python dependencies
