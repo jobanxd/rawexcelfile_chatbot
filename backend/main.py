@@ -8,6 +8,7 @@ from typing import AsyncGenerator
 
 from core.settings import settings
 from routers import chatbot_agent
+from utils.logging_utils import boxed_log
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -20,9 +21,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     try:
         os.environ["GOOGLE_API_KEY"] = settings.GOOGLE_API_KEY
         os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = str(settings.GOOGLE_GENAI_USE_VERTEXAI)
-        logger.info("API startup complete!!!")
+        boxed_log(f"{settings.APP_NAME} started successfully!!!", logger, level="info")
         yield
-        logger.info("Shutting down Application...")
+        boxed_log(f"{settings.APP_NAME} is shutting down...", logger, level="info")
     except Exception as e:
         logger.error(f"Failed to start application : {e}")
         raise

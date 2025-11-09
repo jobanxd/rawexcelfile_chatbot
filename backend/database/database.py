@@ -2,6 +2,7 @@ import sqlite3
 import logging
 from pathlib import Path
 from typing import Dict, List
+from utils.logging_utils import boxed_log
 
 logger = logging.getLogger(__name__)
 
@@ -26,8 +27,8 @@ class InsuranceDatabase:
             conn = self.get_connection()
             cursor = conn.cursor()
 
-            logger.info("SQL Query: %s", query)
-            logger.info("SQL Params: %s", params)
+            boxed_log(f"SQL Query: {query}", logger, level="info")
+            boxed_log(f"SQL Params: {params}", logger, level="info")
 
             if params:
                 cursor.execute(query, params)
@@ -35,7 +36,7 @@ class InsuranceDatabase:
                 cursor.execute(query)
             
             rows = cursor.fetchall()
-            logger.info("Query Results: %s", [dict(row) for row in rows])
+            boxed_log(f"Query Results: {[dict(row) for row in rows]}", logger, level="info")
             return [dict(row) for row in rows]
         except Exception as e:
             logger.error("Database query error: %s", e)

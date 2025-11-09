@@ -6,6 +6,7 @@ from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory import InMemoryMemoryService
 from chatbot_agent.agent import root_agent
 from core.settings import settings
+from utils.logging_utils import boxed_log
 
 # Initialize in-memory servicces
 session_svc = InMemorySessionService()
@@ -59,6 +60,6 @@ class ChatbotService:
                         response_parts.append(part.text)
 
         response_message = "".join(response_parts).strip()
-        logger.info("Response Message: %s", response_message)
+        boxed_log(f"Response Message: {response_message}", logger, level="info")
         return response_message
         
